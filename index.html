@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBL Team Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sidebar-left">
+        <h3>Personagens</h3>
+        <button class="btn" onclick="document.getElementById('fileInput').click()">📂 Carregar JSON</button>
+        <input type="file" id="fileInput" accept=".json">
+
+        <input type="text" id="searchInput" placeholder="Pesquisar (Goku, Vegeta...)" onkeyup="filterGrid()">
+
+        <select id="tagFilter" onchange="filterGrid()"
+            style="width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #444; color: white; margin-bottom: 15px; border-radius: 4px;">
+            <option value="">Todas as Tags</option>
+        </select>
+
+        <div class="char-grid" id="charGrid">
+            <p style="color: #666; grid-column: 1/-1; text-align: center;">Carrega o ficheiro JSON para começar.</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h2>Dragon Ball Legends <span style="color:var(--accent)">Team Builder</span></h2>
+        <p style="color: #aaa;">Clica num personagem à esquerda para adicionar. Clica no slot para remover.</p>
+
+        <div class="team-container" id="teamContainer">
+        </div>
+
+        <!-- Character Analysis Section -->
+        <div id="analysisSection" class="analysis-section" style="display:none;">
+            <div class="analysis-header">
+                <button class="nav-btn" onclick="prevAnalysisChar()">&#10094;</button>
+                <div class="analysis-char-display" id="analysisCharDisplay">
+                    <!-- Populated by JS -->
+                </div>
+                <button class="nav-btn" onclick="nextAnalysisChar()">&#10095;</button>
+            </div>
+
+            <div class="analysis-columns">
+                <div class="analysis-col col-full">
+                    <h4>Recebe (Completo)</h4>
+                    <div id="zAbilityFull" class="z-list"></div>
+                </div>
+                <div class="analysis-col col-partial">
+                    <h4>Recebe (Parcial)</h4>
+                    <div id="zAbilityPartial" class="z-list"></div>
+                </div>
+                <div class="analysis-col col-none">
+                    <h4>Não Recebe</h4>
+                    <div id="zAbilityNone" class="z-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-right">
+        <h3>Status da Equipa</h3>
+        <div style="text-align: center; color: #aaa;">Ability Bonus (Estimado)</div>
+        <div class="big-number" id="totalAbilityBonus">0%</div>
+
+        <div style="text-align: center; color: #aaa; margin-top:20px;">Power Level Total</div>
+        <div class="big-number" style="font-size: 1.5rem;" id="totalPower">0</div>
+
+        <h4>Stats Base (Soma)</h4>
+        <div id="statsBreakdown">
+            <div class="stat-row"><span>HP</span> <span class="stat-val" id="statHP">0</span></div>
+            <div class="stat-row"><span>Strike Atk</span> <span class="stat-val" id="statStrikeAtk">0</span></div>
+            <div class="stat-row"><span>Blast Atk</span> <span class="stat-val" id="statBlastAtk">0</span></div>
+            <div class="stat-row"><span>Strike Def</span> <span class="stat-val" id="statStrikeDef">0</span></div>
+            <div class="stat-row"><span>Blast Def</span> <span class="stat-val" id="statBlastDef">0</span></div>
+        </div>
+
+        <h4>Detalhes dos Personagens</h4>
+        <div class="ability-list" id="characterLinks">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
