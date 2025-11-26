@@ -22,6 +22,11 @@
             <option value="">Todas as Tags</option>
         </select>
 
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <button id="btnZenkai" class="btn" onclick="toggleZenkaiFilter()" style="margin-bottom: 0; background: #333; border: 1px solid #555;">Zenkai Only</button>
+            <button class="btn" onclick="clearFilters()" style="margin-bottom: 0; background: #d9534f; color: white;">Limpar Filtros</button>
+        </div>
+
         <div class="char-grid" id="charGrid">
             <p style="color: #666; grid-column: 1/-1; text-align: center;">Carrega o ficheiro JSON para começar.</p>
         </div>

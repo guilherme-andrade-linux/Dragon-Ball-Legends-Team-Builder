@@ -7606,6 +7606,156 @@
         ]
     },
     {
+        "internal_id": "683",
+        "name": " Jiren: Full Power",
+        "form": " ",
+        "element": "BLU",
+        "rarity": "SPARKING",
+        "zenkai_id": "-1",
+        "is_lf": false,
+        "tags_ids": [
+            "53",
+            "20",
+            "52",
+            "56",
+            "55",
+            "40409",
+            "30044",
+            "99999",
+            "8100003",
+            "8000004",
+            "8000007",
+            "8000009",
+            "8200005",
+            "8000002",
+            "8100000",
+            "9118",
+            "10000",
+            "12002",
+            "13001",
+            "14000",
+            "15004",
+            "19003",
+            "20018",
+            "50124",
+            "60683"
+        ],
+        "url": "https://dblegends.net/character/683",
+        "image": "https://dblegends.net/assets/card_icons/BChaIco_0683_JirenFP_683.webp",
+        "stats": {
+            "HP": "2452555",
+            "Strike ATK": "242707",
+            "Strike DEF": "173715",
+            "Blast ATK": "245161",
+            "Blast DEF": "172666",
+            "Pierce Resist": "100",
+            "Slice Resist": "100",
+            "Impact Resist": "100",
+            "Explode Resist": "100",
+            "Critical Rate": "13.75%",
+            "Ki Recover": "23.08%",
+            "Vanish Recover": "20.00%",
+            "Change CD": "10s"
+        },
+        "z_abilities": [
+            {
+                "level_id": "ZenZAbl1",
+                "description": "Z Ability I If Powerful Opponent ・Base Strike Defense +19%"
+            },
+            {
+                "level_id": "ZenZAbl2",
+                "description": "Z Ability II If Powerful Opponent or Event Exclusive ・Base Strike Defense +22%"
+            },
+            {
+                "level_id": "ZenZAbl3",
+                "description": "Z Ability III If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +29% ・Base Blast Defense +29%"
+            },
+            {
+                "level_id": "ZenZAbl4",
+                "description": "Z Ability IV If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +33% ・Base Blast Defense +33%"
+            }
+        ],
+        "limited_z_ability": [],
+        "main_ability": [
+            {
+                "level_id": "ZenZAbl1",
+                "description": "Z Ability I If Powerful Opponent ・Base Strike Defense +19%"
+            },
+            {
+                "level_id": "ZenZAbl2",
+                "description": "Z Ability II If Powerful Opponent or Event Exclusive ・Base Strike Defense +22%"
+            },
+            {
+                "level_id": "ZenZAbl3",
+                "description": "Z Ability III If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +29% ・Base Blast Defense +29%"
+            },
+            {
+                "level_id": "ZenZAbl4",
+                "description": "Z Ability IV If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +33% ・Base Blast Defense +33%"
+            }
+        ],
+        "unique_abilities": [
+            {
+                "level_id": "ZenZAbl1",
+                "description": "Z Ability I If Powerful Opponent ・Base Strike Defense +19%"
+            },
+            {
+                "level_id": "ZenZAbl2",
+                "description": "Z Ability II If Powerful Opponent or Event Exclusive ・Base Strike Defense +22%"
+            },
+            {
+                "level_id": "ZenZAbl3",
+                "description": "Z Ability III If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +29% ・Base Blast Defense +29%"
+            },
+            {
+                "level_id": "ZenZAbl4",
+                "description": "Z Ability IV If Powerful Opponent , Event Exclusive , or Universe Rep ・Base Strike Defense +33% ・Base Blast Defense +33%"
+            }
+        ],
+        "ultra_ability": [],
+        "arts": [],
+        "visual_tags": [
+            "Universe 11",
+            "Powerful Opponent",
+            "Rival Universe",
+            "Event Exclusive",
+            "Universe Rep",
+            "Festival",
+            "Male",
+            "SPARKING",
+            "Defense Type",
+            "BLU",
+            "Universe Survival Saga (S)",
+            "Jiren",
+            "Strike Back",
+            "Teamwork",
+            "Synergy",
+            "Assault",
+            "Armored Strike Arts",
+            "Healer",
+            "Special Cover Change Nullification",
+            "Universe 11",
+            "Powerful Opponent",
+            "Rival Universe",
+            "Event Exclusive",
+            "Universe Rep",
+            "Festival",
+            "Male",
+            "SPARKING",
+            "Defense Type",
+            "BLU",
+            "Universe Survival Saga (S)",
+            "Jiren",
+            "Strike Back",
+            "Teamwork",
+            "Synergy",
+            "Assault",
+            "Armored Strike Arts",
+            "Healer",
+            "Special Cover Change Nullification"
+        ]
+    },
+    {
         "internal_id": "681",
         "name": " Krillin",
         "form": " ",

@@ -356,6 +356,13 @@ input[type="text"] {
     padding: 8px;
 }
 
+.zenkai-item.none {
+    border-left-color: #e74c3c;
+    /* Red for inactive */
+    background: linear-gradient(90deg, #2a0000 50%, #222 100%);
+    opacity: 0.7;
+}
+
 .zenkai-label {
     background: #ff00ff;
     color: white;
@@ -365,6 +372,10 @@ input[type="text"] {
     margin-right: 5px;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.zenkai-item.none .zenkai-label {
+    background: #e74c3c;
 }
 
 /* --- Character Links --- */

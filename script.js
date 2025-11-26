@@ -60,6 +60,8 @@ function renderGrid(chars) {
     });
 }
 
+let zenkaiFilterActive = false;
+
 function filterGrid() {
     const term = document.getElementById('searchInput').value.toLowerCase();
     const tag = document.getElementById('tagFilter').value;
@@ -67,9 +69,38 @@ function filterGrid() {
     const filtered = allCharacters.filter(c => {
         const matchesName = c.name.toLowerCase().includes(term);
         const matchesTag = tag === "" || (c.visual_tags && c.visual_tags.includes(tag));
-        return matchesName && matchesTag;
+        const matchesZenkai = !zenkaiFilterActive || (c.zenkai_id && c.zenkai_id !== "-1");
+        return matchesName && matchesTag && matchesZenkai;
     });
     renderGrid(filtered);
+}
+
+function toggleZenkaiFilter() {
+    zenkaiFilterActive = !zenkaiFilterActive;
+    const btn = document.getElementById('btnZenkai');
+    if (zenkaiFilterActive) {
+        btn.style.background = "var(--accent)";
+        btn.style.color = "black";
+        btn.style.borderColor = "var(--accent)";
+    } else {
+        btn.style.background = "#333";
+        btn.style.color = "white";
+        btn.style.borderColor = "#555";
+    }
+    filterGrid();
+}
+
+function clearFilters() {
+    document.getElementById('searchInput').value = "";
+    document.getElementById('tagFilter').value = "";
+
+    zenkaiFilterActive = false;
+    const btn = document.getElementById('btnZenkai');
+    btn.style.background = "#333";
+    btn.style.color = "white";
+    btn.style.borderColor = "#555";
+
+    filterGrid();
 }
 
 function populateTagFilter(chars) {
@@ -320,29 +351,33 @@ function renderAnalysis() {
             const bestZenkai = giver.zenkai_abilities[giver.zenkai_abilities.length - 1];
             const isZenkaiApplicable = checkZenkaiCoverage(giver, subjectChar, bestZenkai.description);
 
+            const zenkaiHTML = `
+                <div class="zenkai-item ${isZenkaiApplicable ? '' : 'none'}">
+                    <span class="zenkai-label">ZENKAI</span>
+                    <strong style="color:${getElementColor(giver.element)}">${giver.name}</strong><br>
+                    ${bestZenkai.description}
+                </div>
+            `;
+
             if (isZenkaiApplicable) {
-                const zenkaiHTML = `
-                    <div class="zenkai-item">
-                        <span class="zenkai-label">ZENKAI</span>
-                        <strong style="color:${getElementColor(giver.element)}">${giver.name}</strong><br>
-                        ${bestZenkai.description}
-                    </div>
-                `;
                 // Zenkai is usually very specific, so we treat it as a "Full" buff if applicable.
                 // We append it to the top of the full list or a specific section.
                 // Let's put it at the top of Full List for visibility.
                 fullList.innerHTML = zenkaiHTML + fullList.innerHTML;
+            } else {
+                // If not applicable, add to None list
+                noneList.innerHTML += zenkaiHTML;
             }
         }
     });
 }
 
 function checkZenkaiCoverage(giver, receiver, description) {
-    // Format A: "Increases ... both "Element: X" and "Tag: Y" (or "Episode: Y") ..."
-    if (description.includes("Element:") && (description.includes("Tag:") || description.includes("Episode:"))) {
+    // Format A: "Increases ... both "Element: X" and "Tag: Y" (or "Episode: Y" or "Rarity: Y") ..."
+    if (description.includes("Element:") && (description.includes("Tag:") || description.includes("Episode:") || description.includes("Rarity:"))) {
         const elementMatch = description.match(/"Element: (.*?)"/);
-        // Match either "Tag: ..." or "Episode: ..."
-        const tagMatch = description.match(/"(?:Tag|Episode): (.*?)"/);
+        // Match "Tag:", "Episode:", or "Rarity:"
+        const tagMatch = description.match(/"(?:Tag|Episode|Rarity): (.*?)"/);
 
         if (elementMatch && tagMatch) {
             const reqElement = elementMatch[1];
@@ -404,7 +439,8 @@ function checkZAbilityCoverage(receiver, description) {
         if (matches) {
             matches.forEach(m => {
                 const tags = [];
-                const tagMatches = [...m.matchAll(/"(Tag|Episode): (.*?)"/g)];
+                // Updated regex to include "Element"
+                const tagMatches = [...m.matchAll(/"(Tag|Episode|Element): (.*?)"/g)];
                 tagMatches.forEach(tm => tags.push(tm[2]));
 
                 if (tags.length > 0) {
