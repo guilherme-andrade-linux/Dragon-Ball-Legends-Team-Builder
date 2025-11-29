@@ -1,3 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+// --- FIREBASE CONFIG ---
+const firebaseConfig = {
+    apiKey: "AIzaSyATIMePBMDrIQ7uOGiKrBKfgAhK8IgDJRw",
+    authDomain: "dbl-team-builder.firebaseapp.com",
+    projectId: "dbl-team-builder",
+    storageBucket: "dbl-team-builder.firebasestorage.app",
+    messagingSenderId: "649225970942",
+    appId: "1:649225970942:web:14f58d3bc9e1c0f266f1af",
+    measurementId: "G-5XBM7YY34G"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // --- STATE ---
 let allCharacters = [];
 let team = [null, null, null, null, null, null]; // 6 Slots
@@ -5,6 +22,7 @@ let currentAnalysisIndex = 0; // Index of the character being analyzed (0-5)
 
 // --- INIT ---
 document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+document.getElementById('btnLoadFirebase').addEventListener('click', fetchFromFirebase);
 renderTeamSlots();
 
 // --- FUNCTIONS ---
@@ -26,6 +44,36 @@ function handleFileUpload(event) {
         }
     };
     reader.readAsText(file);
+}
+
+async function fetchFromFirebase() {
+    const btn = document.getElementById('btnLoadFirebase');
+    const originalText = btn.innerText;
+    btn.innerText = "⏳ A carregar...";
+    btn.disabled = true;
+
+    try {
+        const querySnapshot = await getDocs(collection(db, "characters"));
+        allCharacters = [];
+        querySnapshot.forEach((doc) => {
+            allCharacters.push(doc.data());
+        });
+
+        if (allCharacters.length === 0) {
+            alert("Nenhum personagem encontrado no Firebase.");
+        } else {
+            populateTagFilter(allCharacters);
+            renderGrid(allCharacters);
+            alert(`Sucesso! ${allCharacters.length} personagens carregados do Firebase.`);
+        }
+
+    } catch (error) {
+        console.error("Erro ao carregar do Firebase:", error);
+        alert("Erro ao carregar do Firebase. Verifica a consola.");
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
 }
 
 function renderGrid(chars) {
@@ -487,3 +535,13 @@ function checkTag(receiver, req) {
     }
     return false;
 }
+
+// --- EXPOSE TO WINDOW (Required for HTML inline events) ---
+window.handleFileUpload = handleFileUpload;
+window.filterGrid = filterGrid;
+window.toggleZenkaiFilter = toggleZenkaiFilter;
+window.clearFilters = clearFilters;
+window.addToTeam = addToTeam;
+window.removeFromTeam = removeFromTeam;
+window.prevAnalysisChar = prevAnalysisChar;
+window.nextAnalysisChar = nextAnalysisChar;

@@ -12,6 +12,8 @@
 
     <div class="sidebar-left">
         <h3>Personagens</h3>
+        <button class="btn" id="btnLoadFirebase" style="background: #FFCA28; color: black; margin-bottom: 15px;">🔥
+            Carregar do Firebase</button>
         <button class="btn" onclick="document.getElementById('fileInput').click()">📂 Carregar JSON</button>
         <input type="file" id="fileInput" accept=".json">
 
@@ -23,12 +25,15 @@
         </select>
 
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <button id="btnZenkai" class="btn" onclick="toggleZenkaiFilter()" style="margin-bottom: 0; background: #333; border: 1px solid #555;">Zenkai Only</button>
-            <button class="btn" onclick="clearFilters()" style="margin-bottom: 0; background: #d9534f; color: white;">Limpar Filtros</button>
+            <button id="btnZenkai" class="btn" onclick="toggleZenkaiFilter()"
+                style="margin-bottom: 0; background: #333; border: 1px solid #555;">Zenkai Only</button>
+            <button class="btn" onclick="clearFilters()"
+                style="margin-bottom: 0; background: #d9534f; color: white;">Limpar Filtros</button>
         </div>
 
         <div class="char-grid" id="charGrid">
-            <p style="color: #666; grid-column: 1/-1; text-align: center;">Carrega o ficheiro JSON para começar.</p>
+            <p style="color: #666; grid-column: 1/-1; text-align: center;">Carrega o ficheiro JSON ou do Firebase para
+                começar.</p>
         </div>
     </div>
 
@@ -88,7 +93,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
