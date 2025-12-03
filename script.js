@@ -380,7 +380,17 @@ function renderAnalysis() {
         // Z-Ability Check
         if (giver.z_abilities && giver.z_abilities.length > 0) {
             const bestAbility = giver.z_abilities[giver.z_abilities.length - 1];
-            const coverage = checkZAbilityCoverage(subjectChar, bestAbility.description);
+            let coverage = checkZAbilityCoverage(subjectChar, bestAbility.description);
+
+            // Leader Slot Logic:
+            // 1. Leader (Slot 0) receives everything.
+            // 2. Leader (Slot 0) gives to everyone.
+            const isSubjectLeader = currentAnalysisIndex === 0;
+            const isGiverLeader = index === 0;
+
+            if (isSubjectLeader || isGiverLeader) {
+                coverage = { type: 'full' };
+            }
 
             const itemHTML = `
                 <div class="z-item ${coverage.type}">
@@ -422,10 +432,10 @@ function renderAnalysis() {
 
 function checkZenkaiCoverage(giver, receiver, description) {
     // Format A: "Increases ... both "Element: X" and "Tag: Y" (or "Episode: Y" or "Rarity: Y") ..."
-    if (description.includes("Element:") && (description.includes("Tag:") || description.includes("Episode:") || description.includes("Rarity:"))) {
+    if (description.includes("Element:") && (description.includes("Tag:") || description.includes("Episode:") || description.includes("Rarity:") || description.includes("Character:"))) {
         const elementMatch = description.match(/"Element: (.*?)"/);
         // Match "Tag:", "Episode:", or "Rarity:"
-        const tagMatch = description.match(/"(?:Tag|Episode|Rarity): (.*?)"/);
+        const tagMatch = description.match(/"(?:Tag|Episode|Rarity|Character): (.*?)"/);
 
         if (elementMatch && tagMatch) {
             const reqElement = elementMatch[1];
@@ -488,7 +498,7 @@ function checkZAbilityCoverage(receiver, description) {
             matches.forEach(m => {
                 const tags = [];
                 // Updated regex to include "Element"
-                const tagMatches = [...m.matchAll(/"(Tag|Episode|Element): (.*?)"/g)];
+                const tagMatches = [...m.matchAll(/"(Tag|Episode|Element|Character): (.*?)"/g)];
                 tagMatches.forEach(tm => tags.push(tm[2]));
 
                 if (tags.length > 0) {
