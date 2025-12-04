@@ -10,7 +10,8 @@
 
 <body>
 
-    <div class="sidebar-left">
+    <div class="sidebar-left" id="sidebarLeft">
+        <button class="close-btn" onclick="toggleSidebar('left')">&times;</button>
         <h3>Personagens</h3>
         <button class="btn" id="btnLoadFirebase" style="background: #FFCA28; color: black; margin-bottom: 15px;">🔥
             Carregar do Firebase (Base de Dados Online)</button>
@@ -38,6 +39,10 @@
     </div>
 
     <div class="main-content">
+        <div class="mobile-nav">
+            <button class="btn-icon" onclick="toggleSidebar('left')">☰ Chars</button>
+            <button class="btn-icon" onclick="toggleSidebar('right')">Stats ☰</button>
+        </div>
         <h2>Dragon Ball Legends <span style="color:var(--accent)">Team Builder</span></h2>
         <p style="color: #aaa;">Clica num personagem à esquerda para adicionar. Clica no slot para remover.</p>
 
@@ -71,21 +76,12 @@
         </div>
     </div>
 
-    <div class="sidebar-right">
-        <h3>Status da Equipa</h3>
-        <div style="text-align: center; color: #aaa;">Ability Bonus (Estimado)</div>
-        <div class="big-number" id="totalAbilityBonus">0%</div>
-
-        <div style="text-align: center; color: #aaa; margin-top:20px;">Power Level Total</div>
-        <div class="big-number" style="font-size: 1.5rem;" id="totalPower">0</div>
-
-        <h4>Stats Base (Soma)</h4>
-        <div id="statsBreakdown">
-            <div class="stat-row"><span>HP</span> <span class="stat-val" id="statHP">0</span></div>
-            <div class="stat-row"><span>Strike Atk</span> <span class="stat-val" id="statStrikeAtk">0</span></div>
-            <div class="stat-row"><span>Blast Atk</span> <span class="stat-val" id="statBlastAtk">0</span></div>
-            <div class="stat-row"><span>Strike Def</span> <span class="stat-val" id="statStrikeDef">0</span></div>
-            <div class="stat-row"><span>Blast Def</span> <span class="stat-val" id="statBlastDef">0</span></div>
+    <div class="sidebar-right" id="sidebarRight">
+        <button class="close-btn" onclick="toggleSidebar('right')">&times;</button>
+        <h3>Stats do Personagem</h3>
+        <div id="sidebarStats" class="stats-breakdown">
+            <!-- Populated by JS -->
+            <p style="color:#666; text-align:center;">Seleciona um personagem na análise para ver os stats.</p>
         </div>
 
         <h4>Detalhes dos Personagens</h4>

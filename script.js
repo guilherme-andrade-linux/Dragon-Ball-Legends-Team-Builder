@@ -304,14 +304,14 @@ function calculateStats() {
     });
 
     // Update DOM
-    document.getElementById('totalPower').innerText = totalPower.toLocaleString();
-    document.getElementById('totalAbilityBonus').innerText = abilityBonus + "%";
+    // document.getElementById('totalPower').innerText = totalPower.toLocaleString();
+    // document.getElementById('totalAbilityBonus').innerText = abilityBonus + "%";
 
-    document.getElementById('statHP').innerText = statsSum.hp.toLocaleString();
-    document.getElementById('statStrikeAtk').innerText = statsSum.strikeAtk.toLocaleString();
-    document.getElementById('statBlastAtk').innerText = statsSum.blastAtk.toLocaleString();
-    document.getElementById('statStrikeDef').innerText = statsSum.strikeDef.toLocaleString();
-    document.getElementById('statBlastDef').innerText = statsSum.blastDef.toLocaleString();
+    // document.getElementById('statHP').innerText = statsSum.hp.toLocaleString();
+    // document.getElementById('statStrikeAtk').innerText = statsSum.strikeAtk.toLocaleString();
+    // document.getElementById('statBlastAtk').innerText = statsSum.blastAtk.toLocaleString();
+    // document.getElementById('statStrikeDef').innerText = statsSum.strikeDef.toLocaleString();
+    // document.getElementById('statBlastDef').innerText = statsSum.blastDef.toLocaleString();
 
     document.getElementById('characterLinks').innerHTML = characterLinksHTML.join('');
 }
@@ -350,10 +350,12 @@ function renderAnalysis() {
         }
 
         section.style.display = 'none';
+        renderSidebarStats(null); // Clear sidebar if no char
         return;
     }
 
     section.style.display = 'block';
+    renderSidebarStats(subjectChar); // Update sidebar with current char stats
 
     // Render Header
     let imageContent = subjectChar.image
@@ -546,6 +548,79 @@ function checkTag(receiver, req) {
     return false;
 }
 
+function renderSidebarStats(char) {
+    const container = document.getElementById('sidebarStats');
+    if (!char || !char.stats) {
+        container.innerHTML = '<p style="color:#666; text-align:center;">Seleciona um personagem na análise para ver os stats.</p>';
+        return;
+    }
+
+    let html = '';
+    // Define preferred order or just iterate
+    // The user asked to use "stats" from JSON.
+    // Let's iterate over keys.
+    for (const [key, value] of Object.entries(char.stats)) {
+        html += `
+            <div class="stat-row">
+                <span>${key}</span>
+                <span class="stat-val">${value}</span>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+}
+
+// --- MOBILE UI LOGIC ---
+
+function toggleSidebar(side) {
+    const sidebar = document.getElementById(side === 'left' ? 'sidebarLeft' : 'sidebarRight');
+    sidebar.classList.toggle('active');
+}
+
+// Swipe Gestures
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 100; // Minimum distance for swipe
+    const edgeThreshold = 50;   // Only allow opening swipe from edge
+
+    const diff = touchEndX - touchStartX;
+
+    // Swipe Right (Open Left Sidebar or Close Right Sidebar)
+    if (diff > swipeThreshold) {
+        // If starting from left edge, open left sidebar
+        if (touchStartX < edgeThreshold) {
+            document.getElementById('sidebarLeft').classList.add('active');
+        }
+        // If right sidebar is open, close it
+        else if (document.getElementById('sidebarRight').classList.contains('active')) {
+            document.getElementById('sidebarRight').classList.remove('active');
+        }
+    }
+
+    // Swipe Left (Open Right Sidebar or Close Left Sidebar)
+    if (diff < -swipeThreshold) {
+        // If starting from right edge, open right sidebar
+        if (touchStartX > window.innerWidth - edgeThreshold) {
+            document.getElementById('sidebarRight').classList.add('active');
+        }
+        // If left sidebar is open, close it
+        else if (document.getElementById('sidebarLeft').classList.contains('active')) {
+            document.getElementById('sidebarLeft').classList.remove('active');
+        }
+    }
+}
+
 // --- EXPOSE TO WINDOW (Required for HTML inline events) ---
 window.handleFileUpload = handleFileUpload;
 window.filterGrid = filterGrid;
@@ -555,3 +630,4 @@ window.addToTeam = addToTeam;
 window.removeFromTeam = removeFromTeam;
 window.prevAnalysisChar = prevAnalysisChar;
 window.nextAnalysisChar = nextAnalysisChar;
+window.toggleSidebar = toggleSidebar;
